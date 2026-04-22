@@ -5,6 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather Dashboard</title>
   <style>
+    :root {
+      --bg-gradient-start: #667eea;
+      --bg-gradient-end: #764ba2;
+      --text-primary: #1a1a2e;
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --card-city: #2d2d3a;
+      --card-temp: #333;
+      --card-condition: #666;
+      --card-detail: #777;
+      --card-label: #aaa;
+      --card-border: #eee;
+      --card-country: #888;
+      --search-bg: rgba(255, 255, 255, 0.9);
+      --search-placeholder: #999;
+      --header-text: #fff;
+      --header-sub: rgba(255, 255, 255, 0.8);
+    }
+
+    [data-theme="dark"] {
+      --bg-gradient-start: #0f0c29;
+      --bg-gradient-end: #302b63;
+      --text-primary: #e0e0e0;
+      --card-bg: rgba(30, 30, 50, 0.92);
+      --card-city: #e8e8f0;
+      --card-temp: #f0f0f0;
+      --card-condition: #aaa;
+      --card-detail: #999;
+      --card-label: #777;
+      --card-border: #3a3a5a;
+      --card-country: #999;
+      --search-bg: rgba(30, 30, 50, 0.9);
+      --search-placeholder: #777;
+      --header-text: #f0f0f0;
+      --header-sub: rgba(255, 255, 255, 0.6);
+    }
+
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
@@ -13,10 +49,11 @@
 
     body {
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
       min-height: 100vh;
-      color: #1a1a2e;
+      color: var(--text-primary);
       line-height: 1.6;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     .container {
@@ -33,12 +70,12 @@
     header h1 {
       font-size: 2.4rem;
       font-weight: 700;
-      color: #fff;
+      color: var(--header-text);
       letter-spacing: -0.5px;
     }
 
     header p {
-      color: rgba(255, 255, 255, 0.8);
+      color: var(--header-sub);
       font-size: 1.1rem;
       margin-top: 0.4rem;
     }
@@ -50,11 +87,11 @@
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.92);
+      background: var(--card-bg);
       backdrop-filter: blur(10px);
       border-radius: 16px;
       padding: 1.8rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
       box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
     }
 
@@ -66,12 +103,12 @@
     .card-city {
       font-size: 1.25rem;
       font-weight: 600;
-      color: #2d2d3a;
+      color: var(--card-city);
     }
 
     .card-country {
       font-size: 0.85rem;
-      color: #888;
+      color: var(--card-country);
       margin-bottom: 1rem;
     }
 
@@ -83,12 +120,12 @@
     .card-temp {
       font-size: 2.6rem;
       font-weight: 700;
-      color: #333;
+      color: var(--card-temp);
     }
 
     .card-condition {
       font-size: 0.95rem;
-      color: #666;
+      color: var(--card-condition);
       text-transform: capitalize;
       margin-top: 0.25rem;
     }
@@ -98,9 +135,9 @@
       justify-content: space-between;
       margin-top: 1.2rem;
       padding-top: 1rem;
-      border-top: 1px solid #eee;
+      border-top: 1px solid var(--card-border);
       font-size: 0.85rem;
-      color: #777;
+      color: var(--card-detail);
     }
 
     .card-details span {
@@ -114,7 +151,7 @@
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      color: #aaa;
+      color: var(--card-label);
     }
 
     .search-bar {
@@ -128,11 +165,12 @@
       border: none;
       border-radius: 12px;
       font-size: 1rem;
-      background: rgba(255, 255, 255, 0.9);
+      background: var(--search-bg);
       backdrop-filter: blur(10px);
+      color: var(--text-primary);
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
       outline: none;
-      transition: box-shadow 0.2s ease;
+      transition: box-shadow 0.2s ease, background 0.3s ease;
     }
 
     .search-bar input:focus {
@@ -140,14 +178,36 @@
     }
 
     .search-bar input::placeholder {
-      color: #999;
+      color: var(--search-placeholder);
     }
 
     .no-results {
       text-align: center;
-      color: rgba(255, 255, 255, 0.8);
+      color: var(--header-sub);
       font-size: 1.1rem;
       padding: 3rem 0;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      background: var(--card-bg);
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      transition: background 0.3s ease, transform 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
     }
 
     @media (max-width: 540px) {
@@ -158,6 +218,8 @@
   </style>
 </head>
 <body>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle dark mode">&#9790;</button>
+
   <div class="container">
     <header>
       <h1>Weather Dashboard</h1>
@@ -213,6 +275,13 @@
       } else {
         renderCards(filtered);
       }
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute("data-theme") === "dark";
+      html.setAttribute("data-theme", isDark ? "light" : "dark");
+      document.getElementById("themeToggle").textContent = isDark ? "\u263E" : "\u2600";
     }
 
     renderCards(cities);
