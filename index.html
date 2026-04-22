@@ -210,6 +210,29 @@
       transform: scale(1.1);
     }
 
+    .footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--header-sub);
+      font-size: 0.85rem;
+    }
+
+    .footer .last-updated {
+      margin-bottom: 0.3rem;
+    }
+
+    .footer a {
+      color: var(--header-text);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
     @media (max-width: 540px) {
       header h1 { font-size: 1.8rem; }
       .cards { grid-template-columns: 1fr; }
@@ -231,6 +254,11 @@
     </div>
 
     <div class="cards" id="weatherCards"></div>
+
+    <footer class="footer">
+      <div class="last-updated" id="lastUpdated"></div>
+      <div>Built with hardcoded data &mdash; <a href="https://github.com/jayg2309/PR-Skill-Demo-Repo">Source on GitHub</a></div>
+    </footer>
   </div>
 
   <script>
@@ -284,7 +312,18 @@
       document.getElementById("themeToggle").textContent = isDark ? "\u263E" : "\u2600";
     }
 
+    function updateTimestamp() {
+      const now = new Date();
+      const formatted = now.toLocaleString("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+      document.getElementById("lastUpdated").textContent =
+        "Last updated: " + formatted;
+    }
+
     renderCards(cities);
+    updateTimestamp();
   </script>
 </body>
 </html>
