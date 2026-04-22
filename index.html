@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Dashboard</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #1a1a2e;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    header h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+
+    header p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.1rem;
+      margin-top: 0.4rem;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 1.8rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-city {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #2d2d3a;
+    }
+
+    .card-country {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 1rem;
+    }
+
+    .card-icon {
+      font-size: 3rem;
+      margin: 0.5rem 0;
+    }
+
+    .card-temp {
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: #333;
+    }
+
+    .card-condition {
+      font-size: 0.95rem;
+      color: #666;
+      text-transform: capitalize;
+      margin-top: 0.25rem;
+    }
+
+    .card-details {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+      font-size: 0.85rem;
+      color: #777;
+    }
+
+    .card-details span {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .card-details .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #aaa;
+    }
+
+    @media (max-width: 540px) {
+      header h1 { font-size: 1.8rem; }
+      .cards { grid-template-columns: 1fr; }
+      .container { padding: 1.5rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Weather Dashboard</h1>
+      <p>Current conditions around the world</p>
+    </header>
+
+    <div class="cards" id="weatherCards"></div>
+  </div>
+
+  <script>
+    const cities = [
+      { city: "London",    country: "United Kingdom", icon: "\u2601\uFE0F",  temp: 14, condition: "Overcast clouds",   wind: 18, humidity: 72 },
+      { city: "Tokyo",     country: "Japan",          icon: "\u26C5",        temp: 26, condition: "Partly cloudy",      wind: 12, humidity: 58 },
+      { city: "New York",  country: "United States",  icon: "\u2600\uFE0F",  temp: 22, condition: "Clear sky",          wind: 10, humidity: 45 },
+      { city: "Sydney",    country: "Australia",       icon: "\uD83C\uDF24\uFE0F", temp: 19, condition: "Mostly sunny",  wind: 22, humidity: 55 },
+      { city: "Paris",     country: "France",          icon: "\uD83C\uDF27\uFE0F", temp: 11, condition: "Light rain",    wind: 14, humidity: 85 },
+      { city: "Dubai",     country: "UAE",             icon: "\u2600\uFE0F",  temp: 38, condition: "Clear sky",          wind: 8,  humidity: 20 },
+      { city: "Toronto",   country: "Canada",          icon: "\uD83C\uDF28\uFE0F", temp: 4,  condition: "Light snow",    wind: 25, humidity: 78 },
+      { city: "Cape Town", country: "South Africa",    icon: "\uD83C\uDF2C\uFE0F", temp: 21, condition: "Windy",         wind: 35, humidity: 62 },
+    ];
+
+    function renderCards(data) {
+      const container = document.getElementById("weatherCards");
+      container.innerHTML = data.map(c => `
+        <div class="card">
+          <div class="card-city">${c.city}</div>
+          <div class="card-country">${c.country}</div>
+          <div class="card-icon">${c.icon}</div>
+          <div class="card-temp">${c.temp}°C</div>
+          <div class="card-condition">${c.condition}</div>
+          <div class="card-details">
+            <span><span class="label">Wind</span>${c.wind} km/h</span>
+            <span><span class="label">Humidity</span>${c.humidity}%</span>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    renderCards(cities);
+  </script>
+</body>
+</html>
