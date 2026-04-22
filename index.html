@@ -5,6 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather Dashboard</title>
   <style>
+    :root {
+      --bg-gradient-start: #667eea;
+      --bg-gradient-end: #764ba2;
+      --text-primary: #1a1a2e;
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --card-city: #2d2d3a;
+      --card-temp: #333;
+      --card-condition: #666;
+      --card-detail: #777;
+      --card-label: #aaa;
+      --card-border: #eee;
+      --card-country: #888;
+      --search-bg: rgba(255, 255, 255, 0.9);
+      --search-placeholder: #999;
+      --header-text: #fff;
+      --header-sub: rgba(255, 255, 255, 0.8);
+    }
+
+    [data-theme="dark"] {
+      --bg-gradient-start: #0f0c29;
+      --bg-gradient-end: #302b63;
+      --text-primary: #e0e0e0;
+      --card-bg: rgba(30, 30, 50, 0.92);
+      --card-city: #e8e8f0;
+      --card-temp: #f0f0f0;
+      --card-condition: #aaa;
+      --card-detail: #999;
+      --card-label: #777;
+      --card-border: #3a3a5a;
+      --card-country: #999;
+      --search-bg: rgba(30, 30, 50, 0.9);
+      --search-placeholder: #777;
+      --header-text: #f0f0f0;
+      --header-sub: rgba(255, 255, 255, 0.6);
+    }
+
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
@@ -13,10 +49,11 @@
 
     body {
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
       min-height: 100vh;
-      color: #1a1a2e;
+      color: var(--text-primary);
       line-height: 1.6;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     .container {
@@ -31,47 +68,117 @@
     }
 
     header h1 {
-      font-size: 2.4rem;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: -0.5px;
+      font-size: 3.6rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 50%, #c4b5fd 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -1px;
+      text-shadow: 0 4px 30px rgba(255, 255, 255, 0.15);
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
+      line-height: 1.2;
+    }
+
+    header h1::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, #c4b5fd, #818cf8);
+      border-radius: 2px;
+      margin: 0.6rem auto 0;
     }
 
     header p {
-      color: rgba(255, 255, 255, 0.8);
+      color: var(--header-sub);
       font-size: 1.1rem;
       margin-top: 0.4rem;
     }
 
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: minmax(220px, auto);
       gap: 1.5rem;
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(10px);
       border-radius: 16px;
       padding: 1.8rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s ease, filter 0.25s ease;
       box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      color: #fff;
     }
 
     .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+      transform: translateY(-6px);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.25);
+      filter: brightness(0.78);
     }
+
+    /* Style 1 — Ocean Blue (wide) */
+    .card-style-0 {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      border-left: 5px solid #6dd5fa;
+      grid-column: span 2;
+    }
+
+    /* Style 2 — Warm Sunset (tall) */
+    .card-style-1 {
+      background: linear-gradient(135deg, #f12711, #f5af19);
+      border-radius: 24px;
+      border-bottom: 5px solid #fff3;
+      grid-row: span 2;
+    }
+
+    /* Style 3 — Forest Green (normal) */
+    .card-style-2 {
+      background: linear-gradient(160deg, #134e5e, #71b280);
+      border-radius: 8px;
+      border-top: 4px solid #a8e6cf;
+    }
+
+    /* Style 4 — Royal Purple (wide) */
+    .card-style-3 {
+      background: linear-gradient(135deg, #41295a, #2f0743);
+      border-right: 5px solid #c471ed;
+      border-radius: 20px;
+      grid-column: span 2;
+    }
+
+    /* Style 5 — Rose Pink (normal) */
+    .card-style-4 {
+      background: linear-gradient(135deg, #bc4e9c, #f80759);
+      border-radius: 16px 4px 16px 4px;
+      border-bottom: 4px solid #ffb6c1;
+    }
+
+    /* Style 6 — Desert Gold (tall) */
+    .card-style-5 {
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      color: #1a1a2e;
+      border-radius: 12px;
+      border-left: 5px solid #fff8dc;
+      grid-row: span 2;
+    }
+    .card-style-5 .card-city,
+    .card-style-5 .card-temp { color: #1a1a2e; }
+    .card-style-5 .card-country,
+    .card-style-5 .card-condition,
+    .card-style-5 .card-details,
+    .card-style-5 .card-details .label { color: #3b2e00; }
 
     .card-city {
       font-size: 1.25rem;
       font-weight: 600;
-      color: #2d2d3a;
+      color: #fff;
     }
 
     .card-country {
       font-size: 0.85rem;
-      color: #888;
+      color: rgba(255, 255, 255, 0.7);
       margin-bottom: 1rem;
     }
 
@@ -83,12 +190,12 @@
     .card-temp {
       font-size: 2.6rem;
       font-weight: 700;
-      color: #333;
+      color: #fff;
     }
 
     .card-condition {
       font-size: 0.95rem;
-      color: #666;
+      color: rgba(255, 255, 255, 0.75);
       text-transform: capitalize;
       margin-top: 0.25rem;
     }
@@ -98,9 +205,9 @@
       justify-content: space-between;
       margin-top: 1.2rem;
       padding-top: 1rem;
-      border-top: 1px solid #eee;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
       font-size: 0.85rem;
-      color: #777;
+      color: rgba(255, 255, 255, 0.85);
     }
 
     .card-details span {
@@ -114,48 +221,144 @@
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      color: #aaa;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .search-bar {
+      max-width: 420px;
+      margin: 0 auto 2rem;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 0.8rem 1.2rem;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      background: var(--search-bg);
+      backdrop-filter: blur(10px);
+      color: var(--text-primary);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      outline: none;
+      transition: box-shadow 0.2s ease, background 0.3s ease;
+    }
+
+    .search-bar input:focus {
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    .search-bar input::placeholder {
+      color: var(--search-placeholder);
+    }
+
+    .no-results {
+      text-align: center;
+      color: var(--header-sub);
+      font-size: 1.1rem;
+      padding: 3rem 0;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      background: var(--card-bg);
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      transition: background 0.3s ease, transform 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--header-sub);
+      font-size: 0.85rem;
+    }
+
+    .footer .last-updated {
+      margin-bottom: 0.3rem;
+    }
+
+    .footer a {
+      color: var(--header-text);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .cards { grid-template-columns: repeat(2, 1fr); }
+      .card-style-0, .card-style-3 { grid-column: span 1; }
     }
 
     @media (max-width: 540px) {
-      header h1 { font-size: 1.8rem; }
+      header h1 { font-size: 2.4rem; }
       .cards { grid-template-columns: 1fr; }
+      .card-style-0, .card-style-3 { grid-column: span 1; }
+      .card-style-1, .card-style-5 { grid-row: span 1; }
       .container { padding: 1.5rem 1rem; }
     }
   </style>
 </head>
 <body>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle dark mode">&#9790;</button>
+
   <div class="container">
     <header>
       <h1>Weather Dashboard</h1>
       <p>Current conditions around the world</p>
     </header>
 
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search cities..." oninput="filterCities()">
+    </div>
+
     <div class="cards" id="weatherCards"></div>
+
+    <footer class="footer">
+      <div class="last-updated" id="lastUpdated"></div>
+      <div>Built with hardcoded data &mdash; <a href="https://github.com/jayg2309/PR-Skill-Demo-Repo">Source on GitHub</a></div>
+    </footer>
   </div>
 
   <script>
     const cities = [
-      { city: "London",    country: "United Kingdom", icon: "\u2601\uFE0F",  temp: 14, condition: "Overcast clouds",   wind: 18, humidity: 72 },
-      { city: "Tokyo",     country: "Japan",          icon: "\u26C5",        temp: 26, condition: "Partly cloudy",      wind: 12, humidity: 58 },
-      { city: "New York",  country: "United States",  icon: "\u2600\uFE0F",  temp: 22, condition: "Clear sky",          wind: 10, humidity: 45 },
-      { city: "Sydney",    country: "Australia",       icon: "\uD83C\uDF24\uFE0F", temp: 19, condition: "Mostly sunny",  wind: 22, humidity: 55 },
-      { city: "Paris",     country: "France",          icon: "\uD83C\uDF27\uFE0F", temp: 11, condition: "Light rain",    wind: 14, humidity: 85 },
-      { city: "Dubai",     country: "UAE",             icon: "\u2600\uFE0F",  temp: 38, condition: "Clear sky",          wind: 8,  humidity: 20 },
-      { city: "Toronto",   country: "Canada",          icon: "\uD83C\uDF28\uFE0F", temp: 4,  condition: "Light snow",    wind: 25, humidity: 78 },
-      { city: "Cape Town", country: "South Africa",    icon: "\uD83C\uDF2C\uFE0F", temp: 21, condition: "Windy",         wind: 35, humidity: 62 },
+      { city: "London",    country: "United Kingdom", icon: "\u2601\uFE0F",  temp: 14, feelsLike: 11, condition: "Overcast clouds",   wind: 18, humidity: 72 },
+      { city: "Tokyo",     country: "Japan",          icon: "\u26C5",        temp: 26, feelsLike: 28, condition: "Partly cloudy",      wind: 12, humidity: 58 },
+      { city: "New York",  country: "United States",  icon: "\u2600\uFE0F",  temp: 22, feelsLike: 20, condition: "Clear sky",          wind: 10, humidity: 45 },
+      { city: "Paris",     country: "France",          icon: "\uD83C\uDF27\uFE0F", temp: 11, feelsLike: 8,  condition: "Light rain",    wind: 14, humidity: 85 },
+      { city: "Dubai",     country: "UAE",             icon: "\u2600\uFE0F",  temp: 38, feelsLike: 44, condition: "Clear sky",          wind: 8,  humidity: 20 },
+      { city: "Toronto",   country: "Canada",          icon: "\uD83C\uDF28\uFE0F", temp: 4,  feelsLike: -2, condition: "Light snow",    wind: 25, humidity: 78 },
     ];
 
     function renderCards(data) {
       const container = document.getElementById("weatherCards");
-      container.innerHTML = data.map(c => `
-        <div class="card">
+      container.innerHTML = data.map((c, i) => `
+        <div class="card card-style-${i % 6}">
           <div class="card-city">${c.city}</div>
           <div class="card-country">${c.country}</div>
           <div class="card-icon">${c.icon}</div>
           <div class="card-temp">${c.temp}°C</div>
           <div class="card-condition">${c.condition}</div>
           <div class="card-details">
+            <span><span class="label">Feels like</span>${c.feelsLike}°C</span>
             <span><span class="label">Wind</span>${c.wind} km/h</span>
             <span><span class="label">Humidity</span>${c.humidity}%</span>
           </div>
@@ -163,7 +366,39 @@
       `).join("");
     }
 
+    function filterCities() {
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      const filtered = cities.filter(c =>
+        c.city.toLowerCase().includes(query) ||
+        c.country.toLowerCase().includes(query)
+      );
+      if (filtered.length === 0) {
+        document.getElementById("weatherCards").innerHTML =
+          '<div class="no-results">No cities match your search.</div>';
+      } else {
+        renderCards(filtered);
+      }
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute("data-theme") === "dark";
+      html.setAttribute("data-theme", isDark ? "light" : "dark");
+      document.getElementById("themeToggle").textContent = isDark ? "\u263E" : "\u2600";
+    }
+
+    function updateTimestamp() {
+      const now = new Date();
+      const formatted = now.toLocaleString("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+      document.getElementById("lastUpdated").textContent =
+        "Last updated: " + formatted;
+    }
+
     renderCards(cities);
+    updateTimestamp();
   </script>
 </body>
 </html>
