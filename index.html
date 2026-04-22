@@ -98,33 +98,87 @@
 
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: minmax(220px, auto);
       gap: 1.5rem;
     }
 
     .card {
-      background: var(--card-bg);
       backdrop-filter: blur(10px);
       border-radius: 16px;
       padding: 1.8rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s ease, filter 0.25s ease;
       box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      color: #fff;
     }
 
     .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+      transform: translateY(-6px);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.25);
+      filter: brightness(0.78);
     }
+
+    /* Style 1 — Ocean Blue (wide) */
+    .card-style-0 {
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      border-left: 5px solid #6dd5fa;
+      grid-column: span 2;
+    }
+
+    /* Style 2 — Warm Sunset (tall) */
+    .card-style-1 {
+      background: linear-gradient(135deg, #f12711, #f5af19);
+      border-radius: 24px;
+      border-bottom: 5px solid #fff3;
+      grid-row: span 2;
+    }
+
+    /* Style 3 — Forest Green (normal) */
+    .card-style-2 {
+      background: linear-gradient(160deg, #134e5e, #71b280);
+      border-radius: 8px;
+      border-top: 4px solid #a8e6cf;
+    }
+
+    /* Style 4 — Royal Purple (wide) */
+    .card-style-3 {
+      background: linear-gradient(135deg, #41295a, #2f0743);
+      border-right: 5px solid #c471ed;
+      border-radius: 20px;
+      grid-column: span 2;
+    }
+
+    /* Style 5 — Rose Pink (normal) */
+    .card-style-4 {
+      background: linear-gradient(135deg, #bc4e9c, #f80759);
+      border-radius: 16px 4px 16px 4px;
+      border-bottom: 4px solid #ffb6c1;
+    }
+
+    /* Style 6 — Desert Gold (tall) */
+    .card-style-5 {
+      background: linear-gradient(135deg, #b8860b, #d4a017);
+      color: #1a1a2e;
+      border-radius: 12px;
+      border-left: 5px solid #fff8dc;
+      grid-row: span 2;
+    }
+    .card-style-5 .card-city,
+    .card-style-5 .card-temp { color: #1a1a2e; }
+    .card-style-5 .card-country,
+    .card-style-5 .card-condition,
+    .card-style-5 .card-details,
+    .card-style-5 .card-details .label { color: #3b2e00; }
 
     .card-city {
       font-size: 1.25rem;
       font-weight: 600;
-      color: var(--card-city);
+      color: #fff;
     }
 
     .card-country {
       font-size: 0.85rem;
-      color: var(--card-country);
+      color: rgba(255, 255, 255, 0.7);
       margin-bottom: 1rem;
     }
 
@@ -136,12 +190,12 @@
     .card-temp {
       font-size: 2.6rem;
       font-weight: 700;
-      color: var(--card-temp);
+      color: #fff;
     }
 
     .card-condition {
       font-size: 0.95rem;
-      color: var(--card-condition);
+      color: rgba(255, 255, 255, 0.75);
       text-transform: capitalize;
       margin-top: 0.25rem;
     }
@@ -151,9 +205,9 @@
       justify-content: space-between;
       margin-top: 1.2rem;
       padding-top: 1rem;
-      border-top: 1px solid var(--card-border);
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
       font-size: 0.85rem;
-      color: var(--card-detail);
+      color: rgba(255, 255, 255, 0.85);
     }
 
     .card-details span {
@@ -167,7 +221,7 @@
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      color: var(--card-label);
+      color: rgba(255, 255, 255, 0.5);
     }
 
     .search-bar {
@@ -249,9 +303,16 @@
       text-decoration: underline;
     }
 
+    @media (max-width: 768px) {
+      .cards { grid-template-columns: repeat(2, 1fr); }
+      .card-style-0, .card-style-3 { grid-column: span 1; }
+    }
+
     @media (max-width: 540px) {
       header h1 { font-size: 2.4rem; }
       .cards { grid-template-columns: 1fr; }
+      .card-style-0, .card-style-3 { grid-column: span 1; }
+      .card-style-1, .card-style-5 { grid-row: span 1; }
       .container { padding: 1.5rem 1rem; }
     }
   </style>
@@ -282,17 +343,15 @@
       { city: "London",    country: "United Kingdom", icon: "\u2601\uFE0F",  temp: 14, feelsLike: 11, condition: "Overcast clouds",   wind: 18, humidity: 72 },
       { city: "Tokyo",     country: "Japan",          icon: "\u26C5",        temp: 26, feelsLike: 28, condition: "Partly cloudy",      wind: 12, humidity: 58 },
       { city: "New York",  country: "United States",  icon: "\u2600\uFE0F",  temp: 22, feelsLike: 20, condition: "Clear sky",          wind: 10, humidity: 45 },
-      { city: "Sydney",    country: "Australia",       icon: "\uD83C\uDF24\uFE0F", temp: 19, feelsLike: 18, condition: "Mostly sunny",  wind: 22, humidity: 55 },
       { city: "Paris",     country: "France",          icon: "\uD83C\uDF27\uFE0F", temp: 11, feelsLike: 8,  condition: "Light rain",    wind: 14, humidity: 85 },
       { city: "Dubai",     country: "UAE",             icon: "\u2600\uFE0F",  temp: 38, feelsLike: 44, condition: "Clear sky",          wind: 8,  humidity: 20 },
       { city: "Toronto",   country: "Canada",          icon: "\uD83C\uDF28\uFE0F", temp: 4,  feelsLike: -2, condition: "Light snow",    wind: 25, humidity: 78 },
-      { city: "Cape Town", country: "South Africa",    icon: "\uD83C\uDF2C\uFE0F", temp: 21, feelsLike: 19, condition: "Windy",         wind: 35, humidity: 62 },
     ];
 
     function renderCards(data) {
       const container = document.getElementById("weatherCards");
-      container.innerHTML = data.map(c => `
-        <div class="card">
+      container.innerHTML = data.map((c, i) => `
+        <div class="card card-style-${i % 6}">
           <div class="card-city">${c.city}</div>
           <div class="card-country">${c.country}</div>
           <div class="card-icon">${c.icon}</div>
