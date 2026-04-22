@@ -173,14 +173,14 @@
 
   <script>
     const cities = [
-      { city: "London",    country: "United Kingdom", icon: "\u2601\uFE0F",  temp: 14, condition: "Overcast clouds",   wind: 18, humidity: 72 },
-      { city: "Tokyo",     country: "Japan",          icon: "\u26C5",        temp: 26, condition: "Partly cloudy",      wind: 12, humidity: 58 },
-      { city: "New York",  country: "United States",  icon: "\u2600\uFE0F",  temp: 22, condition: "Clear sky",          wind: 10, humidity: 45 },
-      { city: "Sydney",    country: "Australia",       icon: "\uD83C\uDF24\uFE0F", temp: 19, condition: "Mostly sunny",  wind: 22, humidity: 55 },
-      { city: "Paris",     country: "France",          icon: "\uD83C\uDF27\uFE0F", temp: 11, condition: "Light rain",    wind: 14, humidity: 85 },
-      { city: "Dubai",     country: "UAE",             icon: "\u2600\uFE0F",  temp: 38, condition: "Clear sky",          wind: 8,  humidity: 20 },
-      { city: "Toronto",   country: "Canada",          icon: "\uD83C\uDF28\uFE0F", temp: 4,  condition: "Light snow",    wind: 25, humidity: 78 },
-      { city: "Cape Town", country: "South Africa",    icon: "\uD83C\uDF2C\uFE0F", temp: 21, condition: "Windy",         wind: 35, humidity: 62 },
+      { city: "London",    country: "United Kingdom", icon: "\u2601\uFE0F",  temp: 14, feelsLike: 11, condition: "Overcast clouds",   wind: 18, humidity: 72 },
+      { city: "Tokyo",     country: "Japan",          icon: "\u26C5",        temp: 26, feelsLike: 28, condition: "Partly cloudy",      wind: 12, humidity: 58 },
+      { city: "New York",  country: "United States",  icon: "\u2600\uFE0F",  temp: 22, feelsLike: 20, condition: "Clear sky",          wind: 10, humidity: 45 },
+      { city: "Sydney",    country: "Australia",       icon: "\uD83C\uDF24\uFE0F", temp: 19, feelsLike: 18, condition: "Mostly sunny",  wind: 22, humidity: 55 },
+      { city: "Paris",     country: "France",          icon: "\uD83C\uDF27\uFE0F", temp: 11, feelsLike: 8,  condition: "Light rain",    wind: 14, humidity: 85 },
+      { city: "Dubai",     country: "UAE",             icon: "\u2600\uFE0F",  temp: 38, feelsLike: 44, condition: "Clear sky",          wind: 8,  humidity: 20 },
+      { city: "Toronto",   country: "Canada",          icon: "\uD83C\uDF28\uFE0F", temp: 4,  feelsLike: -2, condition: "Light snow",    wind: 25, humidity: 78 },
+      { city: "Cape Town", country: "South Africa",    icon: "\uD83C\uDF2C\uFE0F", temp: 21, feelsLike: 19, condition: "Windy",         wind: 35, humidity: 62 },
     ];
 
     function renderCards(data) {
@@ -193,6 +193,7 @@
           <div class="card-temp">${c.temp}°C</div>
           <div class="card-condition">${c.condition}</div>
           <div class="card-details">
+            <span><span class="label">Feels like</span>${c.feelsLike}°C</span>
             <span><span class="label">Wind</span>${c.wind} km/h</span>
             <span><span class="label">Humidity</span>${c.humidity}%</span>
           </div>
